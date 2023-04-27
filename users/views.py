@@ -21,6 +21,18 @@ class SignupView(APIView):
             return Response({"message": f"{serializer.errors}"}, status=status.HTTP_400_BAD_REQUEST)
 
 
+class LogoutView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request):
+        response = Response({
+            "message": "로그아웃 되었습니다"
+        }, status=status.HTTP_202_ACCEPTED)
+        response.delete_cookie('refreshtoken')
+        response.delete_cookie('accesstoken')
+        return response
+
+
 class CustomTokenObtainPairView(TokenObtainPairView):
     """payload customizing"""
     serializer_class = CustomTokenObtainPairSerializer
