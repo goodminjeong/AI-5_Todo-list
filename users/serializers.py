@@ -16,6 +16,17 @@ class UserSerializer(serializers.ModelSerializer):
         return user
 
 
+class UserInfoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ("email", "name", "gender", "age",
+                  "introduction", "last_login")
+        extra_kwargs = {
+            "email": {"read_only": True},
+            "last_login": {"read_only": True}
+        }
+
+
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
     def get_token(cls, user):

@@ -50,7 +50,7 @@ class User(AbstractBaseUser):
     gender = models.CharField("성별", max_length=20, choices=GENDER_CHOICES)
     age = models.IntegerField(
         "나이", validators=[MinValueValidator(0), MaxValueValidator(120)])
-    introduction = models.TextField("자기소개", blank=True)
+    introduction = models.TextField("자기소개")
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
 
