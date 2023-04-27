@@ -1,5 +1,7 @@
-from rest_framework import status, permissions
+from rest_framework import status
 from rest_framework.views import APIView
+from rest_framework.decorators import permission_classes
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.generics import get_object_or_404
 from users.models import User
@@ -7,8 +9,6 @@ from users.serializers import UserInfoSerializer, UserSerializer, CustomTokenObt
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
 )
-
-# Create your views here.
 
 
 class SignupView(APIView):
@@ -23,14 +23,13 @@ class SignupView(APIView):
 
 
 class ProfileView(APIView):
-    permission_classes = [permissions.IsAuthenticated]
-
     def get(self, request, user_id):
         """회원정보 보기"""
         user = get_object_or_404(User, id=user_id)
         serializer = UserInfoSerializer(user)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+    @permission_classes([IsAuthenticated])
     def put(self, request, user_id):
         """회원정보 수정"""
         user = get_object_or_404(User, id=user_id)
@@ -45,23 +44,17 @@ class ProfileView(APIView):
         else:
             return Response({"message": "수정 권한이 없습니다!"}, status=status.HTTP_403_FORBIDDEN)
 
+    @permission_classes([IsAuthenticated])
     def delete(self, request, user_id):
         """회원탈퇴"""
-        pass
+        user = get_object_or_404(User, id=user_id)
+        if request.user == user:
+            request.user.delete()
+            return Response({"message": "회원탈퇴가 완료되었습니다"}, status=status.HTTP_204_NO_CONTENT)
+        else:
+            return Response({"message": "권한이 없습니다!"}, status=status.HTTP_403_FORBIDDEN)
 
 
 class CustomTokenObtainPairView(TokenObtainPairView):
     """payload customizing"""
     serializer_class = CustomTokenObtainPairSerializer
-
-
-class LogoutView(APIView):
-    permission_classes = [permissions.IsAuthenticated]
-
-    def post(self, request):
-        response = Response({
-            "message": "로그아웃 되었습니다"
-        }, status=status.HTTP_202_ACCEPTED)
-        response.delete_cookie('refreshtoken')
-        response.delete_cookie('accesstoken')
-        return response
