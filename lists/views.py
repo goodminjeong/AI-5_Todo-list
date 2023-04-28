@@ -6,7 +6,6 @@ from rest_framework.response import Response
 from rest_framework.generics import get_object_or_404
 from lists.models import Todo
 from lists.serializers import CreateTodoSerializer, TodoListSerializer
-from users.models import User
 
 
 @permission_classes([IsAuthenticated])

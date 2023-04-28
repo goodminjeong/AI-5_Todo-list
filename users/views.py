@@ -61,15 +61,15 @@ class CustomTokenObtainPairView(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer
 
 
-class LogoutView(APIView):
-    @permission_classes([IsAuthenticated])
-    def post(self, request):
-        """로그아웃"""
-        try:
-            refresh_token = request.data["refresh"]
-            token = RefreshToken(refresh_token)
-            token.blacklist()
+# class LogoutView(APIView):
+#     @permission_classes([IsAuthenticated])
+#     def post(self, request):
+#         """로그아웃"""
+#         try:
+#             refresh_token = request.data["refresh"]
+#             token = RefreshToken(refresh_token)
+#             token.blacklist()
 
-            return Response({"message": "로그아웃 되었습니다"}, status=status.HTTP_205_RESET_CONTENT)
-        except Exception as e:
-            return Response({"message": f"{e}"}, status=status.HTTP_400_BAD_REQUEST)
+#             return Response({"message": "로그아웃 되었습니다"}, status=status.HTTP_205_RESET_CONTENT)
+#         except Exception as e:
+#             return Response({"message": f"{e}"}, status=status.HTTP_400_BAD_REQUEST)
