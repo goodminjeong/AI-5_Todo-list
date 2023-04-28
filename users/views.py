@@ -6,7 +6,7 @@ from rest_framework.decorators import permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.generics import get_object_or_404
-from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
 )
@@ -69,6 +69,6 @@ class LogoutView(APIView):
             token = RefreshToken(refresh_token)
             token.blacklist()
 
-            return Response(status=status.HTTP_205_RESET_CONTENT)
+            return Response({"message": "로그아웃 되었습니다"}, status=status.HTTP_205_RESET_CONTENT)
         except Exception as e:
             return Response({"message": f"{e}"}, status=status.HTTP_400_BAD_REQUEST)
