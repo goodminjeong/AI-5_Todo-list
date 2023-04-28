@@ -14,7 +14,3 @@ class Todo(models.Model):
 
     def __str__(self):
         return str(self.title)
-
-    def update_completion_at(self):
-        self.completion_at = timezone.now()
-        self.save()
