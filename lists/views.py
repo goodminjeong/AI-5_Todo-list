@@ -33,7 +33,6 @@ class TodoView(APIView):
         todo = get_object_or_404(Todo, id=todo_id)
         if request.user == todo.user:
             serializer = CreateTodoSerializer(todo, data=request.data)
-            print(request.data)
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data, status=status.HTTP_200_OK)

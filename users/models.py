@@ -41,11 +41,7 @@ class User(AbstractBaseUser):
         ("non-choice", "선택하지 않음")
     )
 
-    email = models.EmailField(
-        verbose_name="email address",
-        max_length=255,
-        unique=True,
-    )
+    email = models.EmailField("이메일", max_length=255, unique=True)
     name = models.CharField("이름", max_length=20)
     gender = models.CharField("성별", max_length=20, choices=GENDER_CHOICES)
     age = models.IntegerField(
