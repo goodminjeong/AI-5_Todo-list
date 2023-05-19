@@ -49,7 +49,8 @@ class ProfileView(APIView):
         """회원탈퇴"""
         user = get_object_or_404(User, id=user_id)
         if request.user == user:
-            request.user.delete()
+            user.is_active = False
+            user.save()
             return Response({"message": "회원탈퇴가 완료되었습니다"}, status=status.HTTP_204_NO_CONTENT)
         else:
             return Response({"message": "권한이 없습니다!"}, status=status.HTTP_403_FORBIDDEN)
