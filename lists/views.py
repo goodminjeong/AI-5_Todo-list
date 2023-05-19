@@ -49,3 +49,14 @@ class TodoView(APIView):
             return Response(status=status.HTTP_204_NO_CONTENT)
         else:
             return Response("권한이 없습니다!", status=status.HTTP_403_FORBIDDEN)
+
+@permission_classes([IsAuthenticated])
+class TodoCompletionView(APIView):
+    def put(self, request, todo_id):
+        """할일 완료"""
+        todo = get_object_or_404(Todo, id=todo_id)
+        if request.user == todo.user:
+            todo.complete()
+            return Response("할일 완료!", status=status.HTTP_200_OK)
+        else:
+            return Response("권한이 없습니다!", status=status.HTTP_403_FORBIDDEN)

@@ -1,4 +1,4 @@
-from datetime import timezone
+from django.utils import timezone
 from django.db import models
 from users.models import User
 
@@ -12,5 +12,10 @@ class Todo(models.Model):
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="todo_list")
 
+    def complete(self):
+        self.is_complete = True
+        self.completion_at = timezone.now()
+        self.save()
+        
     def __str__(self):
         return str(self.title)
