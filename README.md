@@ -72,8 +72,8 @@ DRF를 사용하여 유저와 할일목록의 생성, 조회, 수정 삭제(CRUD
 #### 할일 등록 
 - http://127.0.0.1:8000/api/lists/ url로 요청 보내기
 - input : title(할 일), is_complete(완료 여부)
-- output : title, is_complete, completion_at(완료 날짜)
-![image](https://github.com/goodminjeong/AI-5_Todo-list/assets/125722304/bcfe7057-8d0f-474a-8c42-dbc8faee29b5)
+- output : id, title, is_complete, created_at, updated_at, completion_at(완료 날짜)
+![image](https://github.com/goodminjeong/AI-5_Todo-list/assets/125722304/b7165527-de0a-45ab-8262-774f8e2f317c)
 
 #### 할일 조회
 - http://127.0.0.1:8000/api/lists/ url로 요청 보내기
